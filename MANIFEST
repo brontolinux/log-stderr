@@ -1,0 +1,6 @@
+Changes
+lib/Log/Stderr.pm
+Makefile.PL
+MANIFEST
+README
+t/Log-Stderr.t
