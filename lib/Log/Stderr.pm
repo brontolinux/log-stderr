@@ -73,12 +73,16 @@ Log::Stderr - Simple logging to Stderr
 
 =head1 SYNOPSIS
 
-To use the logger function and constants:
+To use the logger function and constants (with aliases):
 
   use Log::Stderr qw{:all} ;
   $Log::Stderr::DEBUGLEVEL = 2 ;
   
   logger(LOG_INFO,"Starting") ;
+
+
+To just import the constants (without aliases):
+  use Log::Stderr qw{:constants} ;
 
 
 To just use the logger function:
@@ -93,12 +97,23 @@ To just use the logger function:
   $Log::Stderr::DEBUGLEVEL = LOG_NOTICE ;
 
 
+Note that nothing will prevent you from importing the aliases only,
+but that would be a sub-smart idea (probably).
+
+
 =head1 DESCRIPTION
 
 This module provides a convenient way to have a timestamped log output
 on STDERR. It also defines some mnemonic constants that you may want to
 use to name the log levels (these were shamelessly stolen from the
 syslog(3) man page)
+
+This is a tiny module that I find convenient to use to implement logging
+to STDERR for small-sized scripts. It is mainly a debugging tool. For
+bigger scripts, or in case you need more elaborated logging (e.g.: to
+a file, to syslog...), then use another one of the powerful modules in 
+the Log:: hierarchy on CPAN.
+
 
 =over 4
 
@@ -135,6 +150,11 @@ alias of LOG_ERR
 =item LOG_WARNING
 
 warning conditions
+
+
+=item LOG_WARN
+
+alias for LOG_WARNING
 
 
 =item LOG_NOTICE
