@@ -8,7 +8,7 @@ use Carp ;
 
 use base 'Exporter' ;
 
-our $VERSION = '1.00';
+our $VERSION = '1.01';
 
 my @LOG_CONSTANTS = qw{
 			LOG_NONE   LOG_EMERG LOG_ALERT
@@ -53,14 +53,22 @@ our $DEBUGLEVEL = LOG_NOTICE ;
 
 
 sub logger {
-  my ($level,$message) = @_ ;
+    my ($level,$message) = @_ ;
+    my $caller = (caller(1))[3] ;
 
-  return if $level > $DEBUGLEVEL ;
+    $caller = "-e" if not $caller ;
 
-  $message .= qq{\n} if not $message =~ m{\n$} ;
-  my $now   = scalar localtime ;
+    return if $level > $DEBUGLEVEL ;
 
-  print STDERR qq{[$now] $message} ;
+    $message .= qq{\n} if not $message =~ m{\n$} ;
+    my $now   = scalar localtime ;
+
+    my $log ;
+    $log  = qq{[$now] } ;
+    $log .= qq{[$caller] } if $DEBUGLEVEL >= LOG_DEBUG ;
+    $log .= $message ;
+
+    print STDERR $log ;
 }
 
 
@@ -190,7 +198,7 @@ Marco Marongiu, E<lt>bronto@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2010 by Marco Marongiu
+Copyright (C) 2010-2015 by Marco Marongiu
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
